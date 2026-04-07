@@ -64,7 +64,6 @@
             position: relative;
             overflow-y: auto;
             scrollbar-width: none;
-            /* Memastikan konten mulai tepat dari atas */
             padding-top: 0; 
             border-left: 1px solid rgba(0, 255, 255, 0.2);
             border-right: 1px solid rgba(0, 255, 255, 0.2);
@@ -76,9 +75,9 @@
             display: none;
         }
 
-        /* --- CLOCK STYLING (MELAYANG) --- */
+        /* --- CLOCK STYLING --- */
         .clock-container {
-            position: absolute; /* Ubah ke absolute agar tidak mendorong gambar */
+            position: absolute;
             top: 15px;
             right: 15px;
             display: flex;
@@ -118,7 +117,7 @@
             text-shadow: 0 0 5px #00ffff;
         }
 
-        /* --- FOTO SAMPUL (MENYENTUH ATAS) --- */
+        /* --- FOTO SAMPUL --- */
         .cover-photo {
             width: 100%;
             height: 250px;
@@ -126,28 +125,28 @@
             background-size: cover;
             background-position: center;
             border-bottom: 3px solid #00ffff;
-            margin-top: 0; /* Paksa menempel atas */
         }
 
         .profile-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: -60px; /* Profil tetap naik sedikit ke arah sampul */
+            margin-top: -60px;
             padding: 20px;
             padding-bottom: 50px;
         }
 
+        /* PERUBAHAN DISINI: Glow Biru Cyan Neon */
         .profile-img {
             width: 120px;
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #00ffff;
-            box-shadow: 0 0 15px #00ffff;
+            border: 3px solid #00ffff;
+            box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, inset 0 0 10px #00ffff;
             background-color: #000;
             margin-bottom: 15px;
-            animation: glow 2s infinite;
+            animation: cyanNeonGlow 2s infinite alternate;
         }
 
         #current-date {
@@ -162,18 +161,29 @@
             font-size: 22px;
             font-weight: 700;
             color: #00ffff; 
-            text-shadow: 0 0 10px #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
             text-align: center;
         }
 
+        /* PERUBAHAN DISINI: Glow pada Game Info */
         .game-info {
             text-align: center;
             margin-top: 20px;
-            background: rgba(0, 255, 255, 0.05);
+            background: rgba(0, 255, 255, 0.08);
             padding: 15px;
             border-radius: 15px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border: 2px solid #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
             width: 90%;
+        }
+
+        .game-info p {
+            margin: 5px 0;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.6);
+        }
+
+        .game-info strong {
+            color: #00ffff;
         }
 
         .wa-button {
@@ -190,11 +200,25 @@
             font-weight: bold;
             width: 80%;
             transition: 0.3s;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
         }
 
         .wa-button:hover {
             background: #00ffff;
             color: #000;
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        /* ANIMASI NEON */
+        @keyframes cyanNeonGlow {
+            0% {
+                box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+                border-color: #00ffff;
+            }
+            100% {
+                box-shadow: 0 0 25px #00ffff, 0 0 45px #00ffff, inset 0 0 10px #fff;
+                border-color: #fff;
+            }
         }
 
         /* --- TOMBOL GALERI --- */
@@ -220,13 +244,14 @@
             object-fit: cover;
         }
 
+        /* --- OVERLAY GALERI --- */
         #gallery-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 2000;
             display: flex;
             flex-direction: column;
@@ -249,26 +274,25 @@
             gap: 15px;
             width: 90%;
             max-width: 400px;
-            padding-bottom: 50px;
+            padding-bottom: 80px;
             overflow-y: auto;
+            scrollbar-width: none;
         }
 
+        .grid-container::-webkit-scrollbar { display: none; }
+
         .gallery-item {
-            aspect-ratio: 1/1;
+            aspect-ratio: 9 / 16;
             border-radius: 10px;
             overflow: hidden;
             border: 1px solid #00ffff;
+            background: #111;
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        @keyframes glow {
-            0%, 100% { border-color: #00ffff; box-shadow: 0 0 10px #00ffff; }
-            50% { border-color: #fff; box-shadow: 0 0 20px #00ffff; }
         }
     </style>
 </head>
@@ -320,16 +344,16 @@
     </div>
 
     <div id="gallery-overlay">
-        <div style="text-align: center; margin-bottom: 30px;">
+        <div style="text-align: center; margin-bottom: 20px;">
             <h2 style="color: #00ffff; letter-spacing: 5px; text-shadow: 0 0 10px #00ffff;">GALERI</h2>
-            <button onclick="toggleGallery(false)" style="background:none; border:1px solid #00ffff; color:#00ffff; padding:8px 25px; border-radius:20px; margin-top:15px; cursor:pointer; font-weight: bold; text-transform: uppercase;">Tutup</button>
+            <button onclick="toggleGallery(false)" style="background:none; border:1px solid #00ffff; color:#00ffff; padding:8px 25px; border-radius:20px; margin-top:10px; cursor:pointer; font-weight: bold; text-transform: uppercase;">Tutup</button>
         </div>
         
         <div class="grid-container">
-            <div class="gallery-item"><img src="https://via.placeholder.com/400/000000/00ffff?text=Foto+1" alt="1"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/400/000000/00ffff?text=Foto+2" alt="2"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/400/000000/00ffff?text=Foto+3" alt="3"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/400/000000/00ffff?text=Foto+4" alt="4"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/000000/00ffff?text=9:16+Foto+1" alt="1"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/000000/00ffff?text=9:16+Foto+2" alt="2"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/000000/00ffff?text=9:16+Foto+3" alt="3"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/000000/00ffff?text=9:16+Foto+4" alt="4"></div>
         </div>
     </div>
 
@@ -343,7 +367,7 @@
             }, 2500);
         });
 
-        // Toggle Gallery
+        // Gallery Toggle
         function toggleGallery(show) {
             const overlay = document.getElementById('gallery-overlay');
             const main = document.getElementById('main-container');
@@ -362,7 +386,7 @@
             }
         }
 
-        // Clock logic
+        // Clock Update
         function updateClock() {
             const now = new Date();
             const sec = now.getSeconds(), min = now.getMinutes(), hr = now.getHours();
