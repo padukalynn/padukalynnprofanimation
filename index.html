@@ -209,43 +209,76 @@
             box-shadow: 0 0 20px #00ffff;
         }
 
-                //* --- KOTAK PEMICU GALERI (Dibuat Lebih Tinggi/Portrait) --- */
+                /* --- KOTAK PEMICU GALERI (Di Atas Button WA) --- */
 .gallery-trigger {
-    position: fixed; 
-    bottom: 40px; /* Sedikit lebih tinggi dari bawah layar */
-    left: 20px;
+    /* Mengubah dari fixed menjadi relative agar berada di dalam alur scroll */
+    position: relative; 
+    margin: 20px auto 15px auto; /* Memberi jarak atas dan bawah */
     
-    /* Mengubah ukuran agar lebih tinggi (Rasio Portrait) */
-    width: 60px;   /* Lebar lebih ramping */
-    height: 100px; /* Tinggi diperpanjang */
+    /* Ukuran disamakan/mirip dengan foto profil kecil */
+    width: 65px; 
+    height: 65px;
     
     border: 2px solid #00ffff;
-    border-radius: 12px; /* Sudut sedikit melengkung */
+    border-radius: 50%; /* Dibuat bulat agar serasi dengan foto profil */
     overflow: hidden;
     cursor: pointer;
     background: #000;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    z-index: 10;
     
-    /* Efek menyala yang lebih kuat karena bentuknya tinggi */
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 1001;
-    
-    /* Animasi mengayun pelan agar terlihat hidup */
-    animation: floating 3s ease-in-out infinite;
+    /* Animasi denyut halus */
+    animation: pulse-small 2s infinite;
 }
 
 .gallery-trigger:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 30px #00ffff;
+    box-shadow: 0 0 25px #00ffff;
 }
 
-/* Memastikan gambar di dalamnya tetap proporsional */
 .gallery-trigger img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.8;
 }
+
+/* --- OPTIMASI SCROLL & LANDSCAPE --- */
+.container {
+    width: 100%;
+    max-width: 400px; 
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    position: relative;
+    /* Fitur Scroll Aktif */
+    overflow-y: auto; 
+    overflow-x: hidden;
+    /* Smooth Scroll untuk pengalaman lebih baik */
+    scroll-behavior: smooth; 
+    display: block; /* Menggunakan blok agar elemen bertumpuk normal */
+}
+
+/* Hilangkan scrollbar tapi fungsi scroll tetap ada (opsional agar bersih) */
+.container::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* Pengaturan untuk Mode Landscape (HP Miring) */
+@media screen and (orientation: landscape) {
+    .container {
+        max-width: 600px; /* Lebih lebar saat landscape */
+    }
+    .cover-photo {
+        height: 180px; /* Kecilkan cover agar konten cepat terlihat */
+    }
+}
+
+@keyframes pulse-small {
+    0% { box-shadow: 0 0 5px #00ffff; }
+    50% { box-shadow: 0 0 15px #00ffff; }
+    100% { box-shadow: 0 0 5px #00ffff; }
+}
+
 
 /* --- ANIMASI FLOATING (Agar tombol seolah melayang) --- */
 @keyframes floating {
