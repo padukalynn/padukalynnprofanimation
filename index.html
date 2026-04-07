@@ -21,7 +21,7 @@
             align-items: center;
             min-height: 100vh;
             color: #fff;
-            overflow: hidden;
+            overflow: hidden; /* Mencegah body scroll, hanya container yang scroll */
         }
 
         /* --- OPENING FOTO --- */
@@ -57,29 +57,36 @@
             object-fit: cover;
         }
 
+        /* CONTAINER UTAMA (Scrollable) */
         .container {
             width: 100%;
-            max-width: 400px; 
+            max-width: 450px; 
             height: 100vh;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             position: relative;
-            overflow-y: auto;
+            overflow-y: auto; /* Fitur Scroll Aktif */
+            scrollbar-width: none; /* Sembunyikan scrollbar Firefox */
             border-left: 1px solid rgba(0, 255, 255, 0.2);
             border-right: 1px solid rgba(0, 255, 255, 0.2);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
             transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .container::-webkit-scrollbar {
+            display: none; /* Sembunyikan scrollbar Chrome/Safari */
         }
 
         /* --- CLOCK STYLING --- */
         .clock-container {
-            position: absolute;
+            position: sticky; /* Tetap terlihat saat di-scroll */
             top: 15px;
             right: 15px;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             z-index: 10;
+            pointer-events: none;
         }
 
         .analog-clock {
@@ -127,6 +134,7 @@
             align-items: center;
             margin-top: -60px;
             padding: 20px;
+            padding-bottom: 120px; /* Ruang ekstra untuk tombol bawah */
         }
 
         .profile-img {
@@ -135,7 +143,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid #00ffff;
-            box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+            box-shadow: 0 0 15px #00ffff;
             background-color: #000;
             margin-bottom: 15px;
             animation: glow 2s infinite;
@@ -147,7 +155,6 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 2px;
-            opacity: 0.8;
         }
 
         .name {
@@ -155,89 +162,86 @@
             font-weight: 700;
             color: #00ffff; 
             text-shadow: 0 0 10px #00ffff;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
+            text-align: center;
         }
 
-        .game-info {
+        .game-info, .extra-feature {
             text-align: center;
-            margin-bottom: 25px;
-            background: rgba(0, 255, 255, 0.1);
+            margin-top: 20px;
+            background: rgba(0, 255, 255, 0.05);
             padding: 15px;
-            border-radius: 10px;
-            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
             width: 90%;
         }
 
-        .game-info p {
-            font-size: 14px;
-            color: #00ffff;
-            margin: 5px 0;
-            letter-spacing: 1px;
-        }
-
-        .location {
-            font-size: 13px;
-            color: #fff;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            opacity: 0.9;
-        }
-
         .wa-button {
+            margin-top: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: transparent;
             color: #00ffff;
             border: 2px solid #00ffff;
-            padding: 15px 30px;
+            padding: 15px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
             width: 80%;
+            transition: 0.3s;
         }
 
         .wa-button:hover {
             background: #00ffff;
             color: #000;
-            box-shadow: 0 0 20px #00ffff;
         }
 
-                /* --- KOTAK PEMICU GALERI (Tetap di pojok kiri bawah layar) --- */
+        /* --- TOMBOL GALERI (DITINGKATKAN) --- */
         .gallery-trigger {
-            position: fixed; /* Diubah dari absolute ke fixed */
-            bottom: 20px;
+            position: fixed;
+            bottom: 5%; /* Posisi lebih tinggi agar pas di layar panjang */
             left: 20px;
-            width: 65px;
-            height: 65px;
+            width: 70px;
+            height: 70px;
             border: 2px solid #00ffff;
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-            transition: all 0.3s ease;
-            z-index: 999; /* Memastikan di atas konten lain */
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            z-index: 999;
             background: #000;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .gallery-trigger:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 25px #00ffff;
+        .gallery-trigger:active {
+            transform: scale(0.9);
         }
 
         .gallery-trigger img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.8;
         }
 
+        /* --- LANDSCAPE OPTIMIZATION --- */
+        @media (orientation: landscape) {
+            .container {
+                max-width: 80%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+            .cover-photo {
+                grid-column: span 2;
+                height: 150px;
+            }
+            .clock-container {
+                position: fixed;
+            }
+            .gallery-trigger {
+                bottom: 10%;
+                left: 30px;
+            }
+        }
 
         /* --- OVERLAY GALERI --- */
         #gallery-overlay {
@@ -246,74 +250,43 @@
             left: 50%;
             transform: translateX(-50%) translateY(100%);
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 2000;
             transition: transform 0.5s ease;
             padding: 20px;
             overflow-y: auto;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
         }
 
         #gallery-overlay.active {
             transform: translateX(-50%) translateY(0);
         }
 
-        .gallery-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .gallery-header h2 {
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
-            letter-spacing: 3px;
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .back-btn {
-            background: transparent;
-            color: #fff;
-            border: 1px solid #fff;
-            padding: 5px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding-bottom: 40px;
+            gap: 10px;
+            padding-bottom: 50px;
         }
 
         .gallery-item {
-            aspect-ratio: 9/16;
-            background: #111;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 10px;
+            aspect-ratio: 1/1;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border: 1px solid #00ffff;
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .gallery-item img:hover {
-            transform: scale(1.1);
         }
 
         @keyframes glow {
-            0% { box-shadow: 0 0 5px #00ffff; }
-            50% { box-shadow: 0 0 20px #00ffff, 0 0 30px #008080; }
-            100% { box-shadow: 0 0 5px #00ffff; }
+            0%, 100% { border-color: #00ffff; box-shadow: 0 0 10px #00ffff; }
+            50% { border-color: #fff; box-shadow: 0 0 20px #00ffff; }
         }
     </style>
 </head>
@@ -345,9 +318,7 @@
             <div id="current-date">SABTU, 01 JANUARI 2024</div>
             <h1 class="name">— 𝑷‌𝒂‌𝒅‌𝒖‌𝒌‌á𝑳‌𝒚‌𝒏‌ñ🥇🆙</h1>
             
-            <div class="location">
-                <span>🇯🇵</span> Suginami, Tokyo, Japan
-            </div>
+            <p style="font-size: 13px; opacity: 0.8; margin-bottom: 10px;">🇯🇵 Suginami, Tokyo, Japan</p>
 
             <div class="game-info">
                 <p><strong>Game Name:</strong> RománticLynñ</p>
@@ -355,91 +326,90 @@
             </div>
 
             <a href="https://wa.me/6289652127945" class="wa-button" target="_blank">
-                <span>Chat via WhatsApp</span>
+                Chat via WhatsApp
             </a>
-            
-            <p style="margin-top: 15px; font-size: 12px; color: rgba(0, 255, 255, 0.6);">089652127945</p>
-        </div>
 
-        <div class="gallery-trigger" onclick="toggleGallery(true)">
-            <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg" alt="Open Gallery">
+            <div class="extra-feature">
+                <h3 style="color: #00ffff; margin-bottom: 10px;">Social Media</h3>
+                <p style="font-size: 12px;">Instagram: @paduka_lynñ</p>
+                <p style="font-size: 12px;">TikTok: @padukalynn_official</p>
+            </div>
+
+            <div class="extra-feature">
+                <h3 style="color: #00ffff; margin-bottom: 10px;">About Me</h3>
+                <p style="font-size: 12px; line-height: 1.6;">Selamat datang di profil resmi saya. Saya seorang gamer dan kreator konten yang berbasis di Tokyo. Senang berteman dengan kalian!</p>
+            </div>
+
+            <p style="margin-top: 30px; font-size: 10px; color: rgba(255, 255, 255, 0.4);">© 2026 PadukaLynñ. All Rights Reserved.</p>
         </div>
     </div>
 
+    <div class="gallery-trigger" onclick="toggleGallery(true)">
+        <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg" alt="Open Gallery">
+    </div>
+
     <div id="gallery-overlay">
-        <div class="gallery-header">
-            <h2>GALERI PADUKA</h2>
-            <button class="back-btn" onclick="toggleGallery(false)">← Kembali</button>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h2 style="color: #00ffff; letter-spacing: 5px;">GALERI</h2>
+            <button onclick="toggleGallery(false)" style="background:none; border:1px solid #fff; color:#fff; padding:5px 20px; border-radius:20px; margin-top:10px; cursor:pointer;">Tutup</button>
         </div>
         
         <div class="grid-container">
-            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+1" alt="1"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+2" alt="2"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+3" alt="3"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+4" alt="4"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+5" alt="5"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+6" alt="6"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+1" alt="1"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+2" alt="2"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+3" alt="3"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+4" alt="4"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+5" alt="5"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+6" alt="6"></div>
         </div>
     </div>
 
     <script>
-        // Opening Animation
+        // Opening logic
         window.addEventListener('load', () => {
-            const opening = document.getElementById('opening');
             setTimeout(() => {
+                const opening = document.getElementById('opening');
                 opening.style.opacity = '0';
-                setTimeout(() => {
-                    opening.style.display = 'none';
-                }, 1000);
-            }, 3000);
+                setTimeout(() => opening.style.display = 'none', 1000);
+            }, 2500);
         });
 
-        // Gallery Toggle Function
+        // Toggle Gallery
         function toggleGallery(show) {
             const overlay = document.getElementById('gallery-overlay');
             const main = document.getElementById('main-container');
+            const trigger = document.querySelector('.gallery-trigger');
             
             if (show) {
                 overlay.classList.add('active');
-                main.style.opacity = '0';
-                main.style.transform = 'scale(0.9)';
+                main.style.filter = 'blur(10px) grayscale(100%)';
+                trigger.style.display = 'none';
             } else {
                 overlay.classList.remove('active');
-                main.style.opacity = '1';
-                main.style.transform = 'scale(1)';
+                main.style.filter = 'none';
+                trigger.style.display = 'block';
             }
         }
 
-        // Time and Date Function
+        // Clock logic
         function updateClock() {
             const now = new Date();
+            const sec = now.getSeconds(), min = now.getMinutes(), hr = now.getHours();
             
-            const seconds = now.getSeconds();
-            const minutes = now.getMinutes();
-            const hours = now.getHours();
-
-            const secDeg = (seconds / 60) * 360;
-            const minDeg = (minutes / 60) * 360 + (seconds / 60) * 6;
-            const hourDeg = (hours / 12) * 360 + (minutes / 60) * 30;
-
-            document.getElementById('sec-h').style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
-            document.getElementById('min-h').style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
-            document.getElementById('hour-h').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
-
-            const h = String(hours).padStart(2, '0');
-            const m = String(minutes).padStart(2, '0');
-            const s = String(seconds).padStart(2, '0');
-            document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
+            document.getElementById('sec-h').style.transform = `translateX(-50%) rotate(${(sec/60)*360}deg)`;
+            document.getElementById('min-h').style.transform = `translateX(-50%) rotate(${(min/60)*360}deg)`;
+            document.getElementById('hour-h').style.transform = `translateX(-50%) rotate(${(hr/12)*360 + (min/60)*30}deg)`;
+            
+            document.getElementById('digital-clock').innerText = 
+                `${String(hr).padStart(2,'0')}:${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
 
             const days = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
             const months = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
-            
             document.getElementById('current-date').innerText = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
         }
 
         setInterval(updateClock, 1000);
         updateClock();
     </script>
-
 </body>
 </html>
