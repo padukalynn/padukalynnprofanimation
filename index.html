@@ -209,85 +209,34 @@
             box-shadow: 0 0 20px #00ffff;
         }
 
-                /* --- KOTAK PEMICU GALERI (Di Atas Button WA) --- */
-.gallery-trigger {
-    /* Mengubah dari fixed menjadi relative agar berada di dalam alur scroll */
-    position: relative; 
-    margin: 20px auto 15px auto; /* Memberi jarak atas dan bawah */
-    
-    /* Ukuran disamakan/mirip dengan foto profil kecil */
-    width: 65px; 
-    height: 65px;
-    
-    border: 2px solid #00ffff;
-    border-radius: 50%; /* Dibuat bulat agar serasi dengan foto profil */
-    overflow: hidden;
-    cursor: pointer;
-    background: #000;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-    transition: all 0.3s ease;
-    z-index: 10;
-    
-    /* Animasi denyut halus */
-    animation: pulse-small 2s infinite;
-}
+                /* --- KOTAK PEMICU GALERI (Tetap di pojok kiri bawah layar) --- */
+        .gallery-trigger {
+            position: fixed; /* Diubah dari absolute ke fixed */
+            bottom: 20px;
+            left: 20px;
+            width: 65px;
+            height: 65px;
+            border: 2px solid #00ffff;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            z-index: 999; /* Memastikan di atas konten lain */
+            background: #000;
+        }
 
-.gallery-trigger:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px #00ffff;
-}
+        .gallery-trigger:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px #00ffff;
+        }
 
-.gallery-trigger img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* --- OPTIMASI SCROLL & LANDSCAPE --- */
-.container {
-    width: 100%;
-    max-width: 400px; 
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.6);
-    position: relative;
-    /* Fitur Scroll Aktif */
-    overflow-y: auto; 
-    overflow-x: hidden;
-    /* Smooth Scroll untuk pengalaman lebih baik */
-    scroll-behavior: smooth; 
-    display: block; /* Menggunakan blok agar elemen bertumpuk normal */
-}
-
-/* Hilangkan scrollbar tapi fungsi scroll tetap ada (opsional agar bersih) */
-.container::-webkit-scrollbar {
-    width: 0px;
-}
-
-/* Pengaturan untuk Mode Landscape (HP Miring) */
-@media screen and (orientation: landscape) {
-    .container {
-        max-width: 600px; /* Lebih lebar saat landscape */
-    }
-    .cover-photo {
-        height: 180px; /* Kecilkan cover agar konten cepat terlihat */
-    }
-}
-
-@keyframes pulse-small {
-    0% { box-shadow: 0 0 5px #00ffff; }
-    50% { box-shadow: 0 0 15px #00ffff; }
-    100% { box-shadow: 0 0 5px #00ffff; }
-}
-
-
-/* --- ANIMASI FLOATING (Agar tombol seolah melayang) --- */
-@keyframes floating {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
-
-
+        .gallery-trigger img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
 
 
         /* --- OVERLAY GALERI --- */
@@ -391,26 +340,26 @@
         <div class="cover-photo"></div>
 
         <div class="profile-section">
-    <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg"Profile" class="profile-img">
-    
-    <div id="current-date">...</div>
-    <h1 class="name">...</h1>
-    
-    <div class="location">🇯🇵 Japan/Tokyo</div>
+            <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg" alt="Profile" class="profile-img">
+            
+            <div id="current-date">SABTU, 01 JANUARI 2024</div>
+            <h1 class="name">— 𝑷‌𝒂‌𝒅‌𝒖‌𝒌‌á𝑳‌𝒚‌𝒏‌ñ🥇🆙</h1>
+            
+            <div class="location">
+                <span>🇯🇵</span> Suginami, Tokyo, Japan
+            </div>
 
-    <div class="game-info">...</div>
+            <div class="game-info">
+                <p><strong>Game Name:</strong> RománticLynñ</p>
+                <p><strong>Game ID:</strong> 3246866473</p>
+            </div>
 
-    <div class="gallery-trigger" onclick="toggleGallery(true)">
-        <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg" alt="Open Gallery">
-    </div>
-
-    <a href="https://wa.me/6289652127945" class="wa-button" target="_blank">
-        <span>Chat via WhatsApp</span>
-    </a>
-    
-    <p style="margin-top: 15px; font-size: 12px; color: rgba(0, 255, 255, 0.6); margin-bottom: 50px;">089652127945</p>
-</div>
-
+            <a href="https://wa.me/6289652127945" class="wa-button" target="_blank">
+                <span>Chat via WhatsApp</span>
+            </a>
+            
+            <p style="margin-top: 15px; font-size: 12px; color: rgba(0, 255, 255, 0.6);">089652127945</p>
+        </div>
 
         <div class="gallery-trigger" onclick="toggleGallery(true)">
             <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg" alt="Open Gallery">
@@ -494,3 +443,7 @@
 
 </body>
 </html>
+
+
+buat box togle galery nya muncul di hp layar  
+720x1560
