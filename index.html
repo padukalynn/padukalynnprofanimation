@@ -209,47 +209,51 @@
             box-shadow: 0 0 20px #00ffff;
         }
 
-                /* --- KOTAK PEMICU GALERI (Optimal untuk 720x1560) --- */
+                //* --- KOTAK PEMICU GALERI (Dibuat Lebih Tinggi/Portrait) --- */
 .gallery-trigger {
     position: fixed; 
-    /* Menaikkan sedikit posisi agar tidak terkena navigasi bar HP */
-    bottom: 30px; 
+    bottom: 40px; /* Sedikit lebih tinggi dari bawah layar */
     left: 20px;
-    width: 70px; /* Sedikit lebih besar agar mudah ditekan jempol */
-    height: 70px;
+    
+    /* Mengubah ukuran agar lebih tinggi (Rasio Portrait) */
+    width: 60px;   /* Lebar lebih ramping */
+    height: 100px; /* Tinggi diperpanjang */
+    
     border: 2px solid #00ffff;
-    border-radius: 15px; /* Lebih membulat agar modern */
+    border-radius: 12px; /* Sudut sedikit melengkung */
     overflow: hidden;
     cursor: pointer;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-    transition: all 0.3s ease;
-    z-index: 999; 
     background: #000;
+    
+    /* Efek menyala yang lebih kuat karena bentuknya tinggi */
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1001;
+    
+    /* Animasi mengayun pelan agar terlihat hidup */
+    animation: floating 3s ease-in-out infinite;
 }
 
-/* Penyesuaian Container untuk Layar Tinggi (1560px) */
-.container {
+.gallery-trigger:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px #00ffff;
+}
+
+/* Memastikan gambar di dalamnya tetap proporsional */
+.gallery-trigger img {
     width: 100%;
-    max-width: 400px; 
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.6);
-    position: relative;
-    /* Pastikan konten tidak terpotong di layar panjang */
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
-    border-left: 1px solid rgba(0, 255, 255, 0.2);
-    border-right: 1px solid rgba(0, 255, 255, 0.2);
-    backdrop-filter: blur(5px);
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
 }
 
-/* Responsif khusus untuk layar dengan tinggi besar */
-@media screen and (max-height: 1560px) {
-    .profile-section {
-        padding-bottom: 100px; /* Memberi ruang agar tombol tidak menutupi teks paling bawah */
-    }
+/* --- ANIMASI FLOATING (Agar tombol seolah melayang) --- */
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
 }
+
 
 
 
