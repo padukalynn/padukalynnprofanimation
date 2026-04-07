@@ -21,7 +21,7 @@
             align-items: center;
             min-height: 100vh;
             color: #fff;
-            overflow: hidden; /* Mencegah body scroll, hanya container yang scroll */
+            overflow: hidden;
         }
 
         /* --- OPENING FOTO --- */
@@ -45,7 +45,6 @@
             object-fit: cover;
         }
 
-        /* Background Video Utama */
         .video-bg {
             position: fixed;
             top: 50%;
@@ -57,29 +56,28 @@
             object-fit: cover;
         }
 
-        /* CONTAINER UTAMA (Scrollable) */
         .container {
             width: 100%;
             max-width: 450px; 
             height: 100vh;
             background: rgba(0, 0, 0, 0.7);
             position: relative;
-            overflow-y: auto; /* Fitur Scroll Aktif */
-            scrollbar-width: none; /* Sembunyikan scrollbar Firefox */
+            overflow-y: auto;
+            scrollbar-width: none;
             border-left: 1px solid rgba(0, 255, 255, 0.2);
             border-right: 1px solid rgba(0, 255, 255, 0.2);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
-            transition: transform 0.5s ease, opacity 0.5s ease;
+            transition: filter 0.5s ease;
         }
 
         .container::-webkit-scrollbar {
-            display: none; /* Sembunyikan scrollbar Chrome/Safari */
+            display: none;
         }
 
         /* --- CLOCK STYLING --- */
         .clock-container {
-            position: sticky; /* Tetap terlihat saat di-scroll */
+            position: sticky;
             top: 15px;
             right: 15px;
             display: flex;
@@ -134,7 +132,7 @@
             align-items: center;
             margin-top: -60px;
             padding: 20px;
-            padding-bottom: 120px; /* Ruang ekstra untuk tombol bawah */
+            padding-bottom: 50px;
         }
 
         .profile-img {
@@ -165,7 +163,7 @@
             text-align: center;
         }
 
-        .game-info, .extra-feature {
+        .game-info {
             text-align: center;
             margin-top: 20px;
             background: rgba(0, 255, 255, 0.05);
@@ -196,25 +194,21 @@
             color: #000;
         }
 
-        /* --- TOMBOL GALERI (DITINGKATKAN) --- */
+        /* --- TOMBOL GALERI --- */
         .gallery-trigger {
             position: fixed;
-            bottom: 5%; /* Posisi lebih tinggi agar pas di layar panjang */
+            bottom: 30px;
             left: 20px;
-            width: 70px;
-            height: 70px;
+            width: 65px;
+            height: 65px;
             border: 2px solid #00ffff;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
             z-index: 999;
             background: #000;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .gallery-trigger:active {
-            transform: scale(0.9);
+            transition: transform 0.3s ease, opacity 0.5s ease;
         }
 
         .gallery-trigger img {
@@ -223,59 +217,46 @@
             object-fit: cover;
         }
 
-        /* --- LANDSCAPE OPTIMIZATION --- */
-        @media (orientation: landscape) {
-            .container {
-                max-width: 80%;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            }
-            .cover-photo {
-                grid-column: span 2;
-                height: 150px;
-            }
-            .clock-container {
-                position: fixed;
-            }
-            .gallery-trigger {
-                bottom: 10%;
-                left: 30px;
-            }
-        }
-
-        /* --- OVERLAY GALERI --- */
+        /* --- OVERLAY GALERI (FADE IN/OUT EFFECT) --- */
         #gallery-overlay {
             position: fixed;
             top: 0;
-            left: 50%;
-            transform: translateX(-50%) translateY(100%);
+            left: 0;
             width: 100%;
-            max-width: 450px;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
             z-index: 2000;
-            transition: transform 0.5s ease;
-            padding: 20px;
-            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
             backdrop-filter: blur(15px);
+            padding-top: 40px;
         }
 
         #gallery-overlay.active {
-            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            visibility: visible;
         }
 
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 15px;
+            width: 90%;
+            max-width: 400px;
             padding-bottom: 50px;
+            overflow-y: auto;
         }
 
         .gallery-item {
             aspect-ratio: 1/1;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
             border: 1px solid #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
         }
 
         .gallery-item img {
@@ -329,38 +310,25 @@
                 Chat via WhatsApp
             </a>
 
-            <div class="extra-feature">
-                <h3 style="color: #00ffff; margin-bottom: 10px;">Social Media</h3>
-                <p style="font-size: 12px;">Instagram: @paduka_lynñ</p>
-                <p style="font-size: 12px;">TikTok: @padukalynn_official</p>
-            </div>
-
-            <div class="extra-feature">
-                <h3 style="color: #00ffff; margin-bottom: 10px;">About Me</h3>
-                <p style="font-size: 12px; line-height: 1.6;">Selamat datang di profil resmi saya. Saya seorang gamer dan kreator konten yang berbasis di Tokyo. Senang berteman dengan kalian!</p>
-            </div>
-
-            <p style="margin-top: 30px; font-size: 10px; color: rgba(255, 255, 255, 0.4);">© 2026 PadukaLynñ. All Rights Reserved.</p>
+            <p style="margin-top: 40px; font-size: 10px; color: rgba(255, 255, 255, 0.4);">© 2026 PadukaLynñ. All Rights Reserved.</p>
         </div>
     </div>
 
-    <div class="gallery-trigger" onclick="toggleGallery(true)">
+    <div class="gallery-trigger" id="gallery-btn" onclick="toggleGallery(true)">
         <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg" alt="Open Gallery">
     </div>
 
     <div id="gallery-overlay">
         <div style="text-align: center; margin-bottom: 30px;">
-            <h2 style="color: #00ffff; letter-spacing: 5px;">GALERI</h2>
-            <button onclick="toggleGallery(false)" style="background:none; border:1px solid #fff; color:#fff; padding:5px 20px; border-radius:20px; margin-top:10px; cursor:pointer;">Tutup</button>
+            <h2 style="color: #00ffff; letter-spacing: 5px; text-shadow: 0 0 10px #00ffff;">GALERI</h2>
+            <button onclick="toggleGallery(false)" style="background:none; border:1px solid #00ffff; color:#00ffff; padding:8px 25px; border-radius:20px; margin-top:15px; cursor:pointer; font-weight: bold; text-transform: uppercase;">Tutup</button>
         </div>
         
         <div class="grid-container">
-            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+1" alt="1"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+2" alt="2"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+3" alt="3"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+4" alt="4"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+5" alt="5"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/400x400/000/00ffff?text=Foto+6" alt="6"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400/000000/00ffff?text=Foto+1" alt="1"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400/000000/00ffff?text=Foto+2" alt="2"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400/000000/00ffff?text=Foto+3" alt="3"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400/000000/00ffff?text=Foto+4" alt="4"></div>
         </div>
     </div>
 
@@ -374,20 +342,22 @@
             }, 2500);
         });
 
-        // Toggle Gallery
+        // Toggle Gallery (Fade Effect)
         function toggleGallery(show) {
             const overlay = document.getElementById('gallery-overlay');
             const main = document.getElementById('main-container');
-            const trigger = document.querySelector('.gallery-trigger');
+            const trigger = document.getElementById('gallery-btn');
             
             if (show) {
                 overlay.classList.add('active');
-                main.style.filter = 'blur(10px) grayscale(100%)';
-                trigger.style.display = 'none';
+                main.style.filter = 'blur(10px) grayscale(50%)';
+                trigger.style.opacity = '0';
+                trigger.style.pointerEvents = 'none';
             } else {
                 overlay.classList.remove('active');
                 main.style.filter = 'none';
-                trigger.style.display = 'block';
+                trigger.style.opacity = '1';
+                trigger.style.pointerEvents = 'auto';
             }
         }
 
