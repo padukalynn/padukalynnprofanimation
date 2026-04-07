@@ -1,4 +1,4 @@
-ok<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -56,6 +56,7 @@ ok<!DOCTYPE html>
             object-fit: cover;
         }
 
+        /* --- OPTIMASI DESKTOP & LANDSCAPE --- */
         .container {
             width: 100%;
             max-width: 450px; 
@@ -64,37 +65,63 @@ ok<!DOCTYPE html>
             position: relative;
             overflow-y: auto;
             scrollbar-width: none;
-            padding-top: 0; 
             border-left: 1px solid rgba(0, 255, 255, 0.2);
             border-right: 1px solid rgba(0, 255, 255, 0.2);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            margin: 0 auto;
         }
 
-        .container::-webkit-scrollbar {
-            display: none;
+        .container::-webkit-scrollbar { display: none; }
+
+        /* --- MUSIC PLAYER --- */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00ffff;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 10px #00ffff;
+            transition: 0.3s;
+        }
+
+        .music-control.playing {
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         /* --- CLOCK STYLING --- */
         .clock-container {
-            position: absolute;
+            position: sticky;
             top: 15px;
             right: 15px;
+            float: right;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             z-index: 10;
-            pointer-events: none;
+            padding-right: 15px;
         }
 
         .analog-clock {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border: 2px solid #00ffff;
             border-radius: 50%;
             position: relative;
             background: rgba(0, 0, 0, 0.5);
-            margin-bottom: 5px;
         }
 
         .analog-clock .hand {
@@ -103,24 +130,16 @@ ok<!DOCTYPE html>
             left: 50%;
             transform-origin: bottom;
             background: #00ffff;
-            border-radius: 2px;
         }
 
-        .hour-hand { width: 2px; height: 12px; z-index: 3; }
-        .min-hand { width: 2px; height: 18px; z-index: 2; }
-        .sec-hand { width: 1px; height: 20px; background: #ff0000 !important; z-index: 1; }
+        .hour-hand { width: 2px; height: 10px; }
+        .min-hand { width: 2px; height: 15px; }
+        .sec-hand { width: 1px; height: 18px; background: #ff0000 !important; }
 
-        .digital-clock {
-            font-size: 12px;
-            color: #00ffff;
-            font-weight: bold;
-            text-shadow: 0 0 5px #00ffff;
-        }
-
-        /* --- FOTO SAMPUL --- */
+        /* --- PROFILE --- */
         .cover-photo {
             width: 100%;
-            height: 250px;
+            height: 230px;
             background-image: url('https://i.postimg.cc/QxsHxKyH/Proyek-Baru-1-925B912.png');
             background-size: cover;
             background-position: center;
@@ -133,57 +152,36 @@ ok<!DOCTYPE html>
             align-items: center;
             margin-top: -60px;
             padding: 20px;
-            padding-bottom: 50px;
+            padding-bottom: 100px;
         }
 
-        /* PERUBAHAN DISINI: Glow Biru Cyan Neon */
         .profile-img {
             width: 120px;
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #00ffff;
-            box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, inset 0 0 10px #00ffff;
+            box-shadow: 0 0 20px #00ffff;
             background-color: #000;
             margin-bottom: 15px;
             animation: cyanNeonGlow 2s infinite alternate;
         }
 
-        #current-date {
-            font-size: 11px;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 2px;
-        }
-
         .name {
             font-size: 22px;
-            font-weight: 700;
             color: #00ffff; 
-            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+            text-shadow: 0 0 10px #00ffff;
             text-align: center;
         }
 
-        /* PERUBAHAN DISINI: Glow pada Game Info */
         .game-info {
             text-align: center;
             margin-top: 20px;
-            background: rgba(0, 255, 255, 0.08);
+            background: rgba(0, 255, 255, 0.05);
             padding: 15px;
             border-radius: 15px;
-            border: 2px solid #00ffff;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            border: 1px solid #00ffff;
             width: 90%;
-        }
-
-        .game-info p {
-            margin: 5px 0;
-            text-shadow: 0 0 5px rgba(0, 255, 255, 0.6);
-        }
-
-        .game-info strong {
-            color: #00ffff;
         }
 
         .wa-button {
@@ -191,112 +189,109 @@ ok<!DOCTYPE html>
             display: flex;
             align-items: center;
             justify-content: center;
-            background: transparent;
-            color: #00ffff;
             border: 2px solid #00ffff;
-            padding: 15px;
+            color: #00ffff;
+            padding: 12px;
             border-radius: 50px;
             text-decoration: none;
-            font-weight: bold;
             width: 80%;
+            font-weight: bold;
             transition: 0.3s;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
         }
 
         .wa-button:hover {
             background: #00ffff;
             color: #000;
-            box-shadow: 0 0 20px #00ffff;
         }
 
-        /* ANIMASI NEON */
-        @keyframes cyanNeonGlow {
-            0% {
-                box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
-                border-color: #00ffff;
-            }
-            100% {
-                box-shadow: 0 0 25px #00ffff, 0 0 45px #00ffff, inset 0 0 10px #fff;
-                border-color: #fff;
-            }
-        }
-
-        /* --- TOMBOL GALERI --- */
-        .gallery-trigger {
+        /* --- BUTTERFLY PARTICLES --- */
+        .gallery-wrapper {
             position: fixed;
             bottom: 30px;
-            left: 20px;
+            left: 30px;
+            z-index: 999;
+        }
+
+        .butterfly {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #00ffff;
+            border-radius: 50%;
+            filter: blur(2px);
+            pointer-events: none;
+            opacity: 0;
+            animation: fly 4s infinite ease-in-out;
+        }
+
+        @keyframes fly {
+            0% { transform: translate(0, 0) scale(1); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+        }
+
+        .gallery-trigger {
             width: 65px;
             height: 65px;
             border: 2px solid #00ffff;
             border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-            z-index: 999;
             background: #000;
-            transition: transform 0.3s ease, opacity 0.5s ease;
+            position: relative;
+            z-index: 10;
         }
 
-        .gallery-trigger img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .gallery-trigger img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- OVERLAY GALERI --- */
+        /* --- GALLERY OVERLAY --- */
         #gallery-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 2000;
             display: flex;
             flex-direction: column;
             align-items: center;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-            backdrop-filter: blur(15px);
-            padding-top: 40px;
+            transition: 0.5s;
+            backdrop-filter: blur(10px);
+            padding-top: 50px;
         }
 
-        #gallery-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        #gallery-overlay.active { opacity: 1; visibility: visible; }
 
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 10px;
             width: 90%;
             max-width: 400px;
-            padding-bottom: 80px;
             overflow-y: auto;
-            scrollbar-width: none;
         }
 
-        .grid-container::-webkit-scrollbar { display: none; }
+        .gallery-item { aspect-ratio: 9/16; border-radius: 8px; overflow: hidden; border: 1px solid #00ffff; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        .gallery-item {
-            aspect-ratio: 9 / 16;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid #00ffff;
-            background: #111;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        @keyframes cyanNeonGlow {
+            from { box-shadow: 0 0 10px #00ffff; }
+            to { box-shadow: 0 0 25px #00ffff, 0 0 5px #fff; }
         }
     </style>
 </head>
 <body>
+
+    <div class="music-control" id="music-btn" onclick="toggleMusic()">
+        <span id="music-icon">🎵</span>
+    </div>
+
+    <audio id="myAudio" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-memories.mp3" type="audio/mp3">
+    </audio>
 
     <div id="opening">
         <img src="https://i.postimg.cc/J0bWGWq4/Proyek-Baru-8-05D47A8.png" alt="Opening" class="opening-img">
@@ -313,96 +308,100 @@ ok<!DOCTYPE html>
                 <div class="hand min-hand" id="min-h"></div>
                 <div class="hand sec-hand" id="sec-h"></div>
             </div>
-            <div class="digital-clock" id="digital-clock">00:00:00</div>
+            <div class="digital-clock" id="digital-clock" style="font-size: 10px; color: #00ffff;">00:00:00</div>
         </div>
 
         <div class="cover-photo"></div>
 
         <div class="profile-section">
             <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg" alt="Profile" class="profile-img">
-            
-            <div id="current-date">SABTU, 01 JANUARI 2024</div>
+            <div id="current-date" style="font-size: 10px; letter-spacing: 2px;">SABTU, 01 JANUARI 2024</div>
             <h1 class="name">— 𝑷‌𝒂‌𝒅‌𝒖‌𝒌‌á𝑳‌𝒚‌𝒏‌ñ🥇🆙</h1>
-            
-            <p style="font-size: 13px; opacity: 0.8; margin-bottom: 10px;">🇯🇵 Suginami, Tokyo, Japan</p>
+            <p style="font-size: 12px; opacity: 0.7; margin: 5px 0;">🇯🇵 Suginami, Tokyo, Japan</p>
 
             <div class="game-info">
                 <p><strong>Game Name:</strong> RománticLynñ</p>
                 <p><strong>Game ID:</strong> 3246866473</p>
             </div>
 
-            <a href="https://wa.me/6289652127945" class="wa-button" target="_blank">
-                Chat via WhatsApp
-            </a>
-
-            <p style="margin-top: 40px; font-size: 10px; color: rgba(255, 255, 255, 0.4);">© 2026 PadukaLynñ. All Rights Reserved.</p>
+            <a href="https://wa.me/6289652127945" class="wa-button" target="_blank">Chat via WhatsApp</a>
+            <p style="margin-top: 30px; font-size: 9px; color: rgba(255, 255, 255, 0.3);">© 2026 PadukaLynñ.</p>
         </div>
     </div>
 
-    <div class="gallery-trigger" id="gallery-btn" onclick="toggleGallery(true)">
-        <img src="https://i.postimg.cc/Z5YvyXYL/IMG-20260407-214744.jpg alt="Open Gallery">
+    <div class="gallery-wrapper">
+        <div id="butterfly-container"></div>
+        <div class="gallery-trigger" id="gallery-btn" onclick="toggleGallery(true)">
+            <img src="https://i.postimg.cc/Z5YvyXYL/IMG-20260407-214744.jpg" alt="Gallery">
+        </div>
     </div>
 
     <div id="gallery-overlay">
-        <div style="text-align: center; margin-bottom: 20px;">
-            <h2 style="color: #00ffff; letter-spacing: 5px; text-shadow: 0 0 10px #00ffff;">GALERI</h2>
-            <button onclick="toggleGallery(false)" style="background:none; border:1px solid #00ffff; color:#00ffff; padding:8px 25px; border-radius:20px; margin-top:10px; cursor:pointer; font-weight: bold; text-transform: uppercase;">Tutup</button>
-        </div>
-        
+        <h2 style="color: #00ffff; margin-bottom: 20px;">GALERI</h2>
         <div class="grid-container">
-            <div class="gallery-item"><img src="https://i.postimg.cc/90mdL0tw/d2f75f32837faa3c3280cabe94c80bd2.jpg" alt="1"></div>
-            <div class="gallery-item"><img src="https://i.postimg.cc/Jz5P5wWx/2b98f64a459a6ed9caa0be3fd83b1f5f.jpg" alt="2"></div>
-            <div class="gallery-item"><img src="https://i.postimg.cc/C5MFdpSd/e48eac89085fbe7210a3d448aad1c92e.jpg" alt="3"></div>
-            <div class="gallery-item"><img src="https://i.postimg.cc/15Cpm9PT/ada6b6052175095cb63500cd9d92922f.jpg" alt="4"></div>
+            <div class="gallery-item"><img src="https://i.postimg.cc/90mdL0tw/d2f75f32837faa3c3280cabe94c80bd2.jpg"></div>
+            <div class="gallery-item"><img src="https://i.postimg.cc/Jz5P5wWx/2b98f64a459a6ed9caa0be3fd83b1f5f.jpg"></div>
+            <div class="gallery-item"><img src="https://i.postimg.cc/C5MFdpSd/e48eac89085fbe7210a3d448aad1c92e.jpg"></div>
+            <div class="gallery-item"><img src="https://i.postimg.cc/15Cpm9PT/ada6b6052175095cb63500cd9d92922f.jpg"></div>
         </div>
+        <button onclick="toggleGallery(false)" style="margin-top: 20px; background: none; border: 1px solid #00ffff; color: #00ffff; padding: 10px 30px; border-radius: 20px;">Tutup</button>
     </div>
 
     <script>
-        // Opening logic
+        // Music Logic
+        const audio = document.getElementById('myAudio');
+        const btn = document.getElementById('music-btn');
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                btn.classList.add('playing');
+            } else {
+                audio.pause();
+                btn.classList.remove('playing');
+            }
+        }
+
+        // Butterfly Particles
+        function createButterflies() {
+            const container = document.getElementById('butterfly-container');
+            for (let i = 0; i < 8; i++) {
+                const b = document.createElement('div');
+                b.className = 'butterfly';
+                b.style.setProperty('--x', (Math.random() * 100 - 50) + 'px');
+                b.style.setProperty('--y', (Math.random() * -100 - 20) + 'px');
+                b.style.left = Math.random() * 50 + 'px';
+                b.style.animationDelay = Math.random() * 4 + 's';
+                container.appendChild(b);
+            }
+        }
+        createButterflies();
+
+        // Opening & Gallery Logic
         window.addEventListener('load', () => {
             setTimeout(() => {
-                const opening = document.getElementById('opening');
-                opening.style.opacity = '0';
-                setTimeout(() => opening.style.display = 'none', 1000);
+                document.getElementById('opening').style.opacity = '0';
+                setTimeout(() => document.getElementById('opening').style.display = 'none', 1000);
             }, 2500);
         });
 
-        // Gallery Toggle
         function toggleGallery(show) {
             const overlay = document.getElementById('gallery-overlay');
-            const main = document.getElementById('main-container');
-            const trigger = document.getElementById('gallery-btn');
-            
-            if (show) {
-                overlay.classList.add('active');
-                main.style.filter = 'blur(10px) grayscale(50%)';
-                trigger.style.opacity = '0';
-                trigger.style.pointerEvents = 'none';
-            } else {
-                overlay.classList.remove('active');
-                main.style.filter = 'none';
-                trigger.style.opacity = '1';
-                trigger.style.pointerEvents = 'auto';
-            }
+            overlay.classList.toggle('active', show);
         }
 
         // Clock Update
         function updateClock() {
             const now = new Date();
-            const sec = now.getSeconds(), min = now.getMinutes(), hr = now.getHours();
+            const s = now.getSeconds(), m = now.getMinutes(), h = now.getHours();
+            document.getElementById('sec-h').style.transform = `translateX(-50%) rotate(${(s/60)*360}deg)`;
+            document.getElementById('min-h').style.transform = `translateX(-50%) rotate(${(m/60)*360}deg)`;
+            document.getElementById('hour-h').style.transform = `translateX(-50%) rotate(${(h/12)*360 + (m/60)*30}deg)`;
+            document.getElementById('digital-clock').innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
             
-            document.getElementById('sec-h').style.transform = `translateX(-50%) rotate(${(sec/60)*360}deg)`;
-            document.getElementById('min-h').style.transform = `translateX(-50%) rotate(${(min/60)*360}deg)`;
-            document.getElementById('hour-h').style.transform = `translateX(-50%) rotate(${(hr/12)*360 + (min/60)*30}deg)`;
-            
-            document.getElementById('digital-clock').innerText = 
-                `${String(hr).padStart(2,'0')}:${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
-
             const days = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
             const months = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
             document.getElementById('current-date').innerText = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
         }
-
         setInterval(updateClock, 1000);
         updateClock();
     </script>
