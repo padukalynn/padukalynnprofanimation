@@ -64,20 +64,21 @@
             position: relative;
             overflow-y: auto;
             scrollbar-width: none;
+            /* Memastikan konten mulai tepat dari atas */
+            padding-top: 0; 
             border-left: 1px solid rgba(0, 255, 255, 0.2);
             border-right: 1px solid rgba(0, 255, 255, 0.2);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
-            transition: filter 0.5s ease;
         }
 
         .container::-webkit-scrollbar {
             display: none;
         }
 
-        /* --- CLOCK STYLING --- */
+        /* --- CLOCK STYLING (MELAYANG) --- */
         .clock-container {
-            position: sticky;
+            position: absolute; /* Ubah ke absolute agar tidak mendorong gambar */
             top: 15px;
             right: 15px;
             display: flex;
@@ -117,6 +118,7 @@
             text-shadow: 0 0 5px #00ffff;
         }
 
+        /* --- FOTO SAMPUL (MENYENTUH ATAS) --- */
         .cover-photo {
             width: 100%;
             height: 250px;
@@ -124,13 +126,14 @@
             background-size: cover;
             background-position: center;
             border-bottom: 3px solid #00ffff;
+            margin-top: 0; /* Paksa menempel atas */
         }
 
         .profile-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: -60px;
+            margin-top: -60px; /* Profil tetap naik sedikit ke arah sampul */
             padding: 20px;
             padding-bottom: 50px;
         }
@@ -217,7 +220,6 @@
             object-fit: cover;
         }
 
-        /* --- OVERLAY GALERI (FADE IN/OUT EFFECT) --- */
         #gallery-overlay {
             position: fixed;
             top: 0;
@@ -256,7 +258,6 @@
             border-radius: 10px;
             overflow: hidden;
             border: 1px solid #00ffff;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
         }
 
         .gallery-item img {
@@ -342,7 +343,7 @@
             }, 2500);
         });
 
-        // Toggle Gallery (Fade Effect)
+        // Toggle Gallery
         function toggleGallery(show) {
             const overlay = document.getElementById('gallery-overlay');
             const main = document.getElementById('main-container');
