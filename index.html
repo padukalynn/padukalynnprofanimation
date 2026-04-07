@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', sans-serif; /* Menghapus fallback serif */
         }
 
         body {
@@ -70,6 +70,49 @@
             backdrop-filter: blur(5px);
         }
 
+        /* --- CLOCK STYLING --- */
+        .clock-container {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            z-index: 10;
+        }
+
+        /* Analog Clock */
+        .analog-clock {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #00ffff;
+            border-radius: 50%;
+            position: relative;
+            background: rgba(0, 0, 0, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .analog-clock .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background: #00ffff;
+            border-radius: 2px;
+        }
+
+        .hour-hand { width: 2px; height: 12px; z-index: 3; }
+        .min-hand { width: 2px; height: 18px; z-index: 2; }
+        .sec-hand { width: 1px; height: 20px; background: #ff0000 !important; z-index: 1; }
+
+        /* Digital Clock */
+        .digital-clock {
+            font-size: 12px;
+            color: #00ffff;
+            font-weight: bold;
+            text-shadow: 0 0 5px #00ffff;
+        }
+
         .cover-photo {
             width: 100%;
             height: 250px;
@@ -99,13 +142,23 @@
             animation: glow 2s infinite;
         }
 
+        /* Dynamic Date Styling */
+        #current-date {
+            font-size: 11px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2px;
+            opacity: 0.8;
+        }
+
         .name {
-            font-size: 24px; /* Sedikit disesuaikan agar font khusus muat */
+            font-size: 22px;
             font-weight: 700;
             color: #00ffff; 
             text-shadow: 0 0 10px #00ffff;
             margin-bottom: 5px;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .game-info {
@@ -176,11 +229,21 @@
     </video>
 
     <div class="container">
+        <div class="clock-container">
+            <div class="analog-clock">
+                <div class="hand hour-hand" id="hour-h"></div>
+                <div class="hand min-hand" id="min-h"></div>
+                <div class="hand sec-hand" id="sec-h"></div>
+            </div>
+            <div class="digital-clock" id="digital-clock">00:00:00</div>
+        </div>
+
         <div class="cover-photo"></div>
 
         <div class="profile-section">
             <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg" alt="Profile" class="profile-img">
             
+            <div id="current-date">SABTU, 01 JANUARI 2024</div>
             <h1 class="name">— 𝑷‌𝒂‌𝒅‌𝒖‌𝒌‌á𝑳‌𝒚‌𝒏‌ñ🥇🆙</h1>
             
             <div class="location">
@@ -201,6 +264,7 @@
     </div>
 
     <script>
+        // Opening Animation
         window.addEventListener('load', () => {
             const opening = document.getElementById('opening');
             setTimeout(() => {
@@ -210,6 +274,44 @@
                 }, 1000);
             }, 3000);
         });
+
+        // Time and Date Function
+        function updateClock() {
+            const now = new Date();
+            
+            // Analog Clock
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+
+            const secDeg = (seconds / 60) * 360;
+            const minDeg = (minutes / 60) * 360 + (seconds / 60) * 6;
+            const hourDeg = (hours / 12) * 360 + (minutes / 60) * 30;
+
+            document.getElementById('sec-h').style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
+            document.getElementById('min-h').style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
+            document.getElementById('hour-h').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+
+            // Digital Clock
+            const h = String(hours).padStart(2, '0');
+            const m = String(minutes).padStart(2, '0');
+            const s = String(seconds).padStart(2, '0');
+            document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
+
+            // Date Update
+            const days = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
+            const months = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
+            
+            const dayName = days[now.getDay()];
+            const date = now.getDate();
+            const monthName = months[now.getMonth()];
+            const year = now.getFullYear();
+
+            document.getElementById('current-date').innerText = `${dayName}, ${date} ${monthName} ${year}`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); // Run immediately
     </script>
 
 </body>
