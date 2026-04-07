@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>—PadukaLynn Profile</title>
+    <title>—PᴀᴅᴜᴋᴀLʏɴɴ Profile</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
 
@@ -32,11 +32,11 @@
             width: 100%;
             height: 100%;
             background: #000;
-            z-index: 10000; /* Paling atas */
+            z-index: 10000;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 1s ease; /* Efek Fade Out */
+            transition: opacity 1s ease;
         }
 
         .opening-img {
@@ -100,16 +100,17 @@
         }
 
         .name {
-            font-size: 26px;
+            font-size: 24px; /* Sedikit disesuaikan agar font khusus muat */
             font-weight: 700;
             color: #00ffff; 
             text-shadow: 0 0 10px #00ffff;
             margin-bottom: 5px;
+            letter-spacing: 2px;
         }
 
         .game-info {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             background: rgba(0, 255, 255, 0.1);
             padding: 15px;
             border-radius: 10px;
@@ -122,6 +123,16 @@
             color: #00ffff;
             margin: 5px 0;
             letter-spacing: 1px;
+        }
+
+        .location {
+            font-size: 13px;
+            color: #fff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.9;
         }
 
         .wa-button {
@@ -170,8 +181,12 @@
         <div class="profile-section">
             <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg" alt="Profile" class="profile-img">
             
-            <h1 class="name">—PadukaLynn</h1>
+            <h1 class="name">—PᴀᴅᴜᴋᴀLʏɴɴ</h1>
             
+            <div class="location">
+                <span>🇯🇵</span> Suginami, Tokyo, Japan
+            </div>
+
             <div class="game-info">
                 <p><strong>Game Name:</strong> RománticLynñ</p>
                 <p><strong>Game ID:</strong> 3246866473</p>
@@ -186,16 +201,14 @@
     </div>
 
     <script>
-        // Logika untuk menghilangkan opening foto setelah 3 detik
         window.addEventListener('load', () => {
             const opening = document.getElementById('opening');
-            
             setTimeout(() => {
-                opening.style.opacity = '0'; // Mulai efek fade out
+                opening.style.opacity = '0';
                 setTimeout(() => {
-                    opening.style.display = 'none'; // Benar-benar hapus dari layar
-                }, 1000); // 1000ms sesuai durasi transisi CSS
-            }, 3000); // Bertahan selama 3 detik
+                    opening.style.display = 'none';
+                }, 1000);
+            }, 3000);
         });
     </script>
 
