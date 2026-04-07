@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif; /* Menghapus fallback serif */
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
@@ -24,7 +24,7 @@
             overflow: hidden;
         }
 
-        /* --- STYLING OPENING FOTO --- */
+        /* --- OPENING FOTO --- */
         #opening {
             position: fixed;
             top: 0;
@@ -68,6 +68,7 @@
             border-right: 1px solid rgba(0, 255, 255, 0.2);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
+            transition: transform 0.5s ease, opacity 0.5s ease;
         }
 
         /* --- CLOCK STYLING --- */
@@ -81,7 +82,6 @@
             z-index: 10;
         }
 
-        /* Analog Clock */
         .analog-clock {
             width: 50px;
             height: 50px;
@@ -105,7 +105,6 @@
         .min-hand { width: 2px; height: 18px; z-index: 2; }
         .sec-hand { width: 1px; height: 20px; background: #ff0000 !important; z-index: 1; }
 
-        /* Digital Clock */
         .digital-clock {
             font-size: 12px;
             color: #00ffff;
@@ -142,7 +141,6 @@
             animation: glow 2s infinite;
         }
 
-        /* Dynamic Date Styling */
         #current-date {
             font-size: 11px;
             color: #fff;
@@ -211,6 +209,103 @@
             box-shadow: 0 0 20px #00ffff;
         }
 
+        /* --- KOTAK PEMICU GALERI (Pojok Kiri Bawah) --- */
+        .gallery-trigger {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            border: 2px solid #00ffff;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 0 10px #00ffff;
+            transition: transform 0.3s;
+            z-index: 20;
+        }
+
+        .gallery-trigger:hover {
+            transform: scale(1.1);
+        }
+
+        .gallery-trigger img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- OVERLAY GALERI --- */
+        #gallery-overlay {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            transition: transform 0.5s ease;
+            padding: 20px;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        #gallery-overlay.active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .gallery-header h2 {
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            letter-spacing: 3px;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .back-btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding-bottom: 40px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 9/16;
+            background: #111;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.1);
+        }
+
         @keyframes glow {
             0% { box-shadow: 0 0 5px #00ffff; }
             50% { box-shadow: 0 0 20px #00ffff, 0 0 30px #008080; }
@@ -228,7 +323,7 @@
         <source src="https://res.cloudinary.com/drxy2exhs/video/upload/950bb6c7b0ca008ce036d52ace1349ef_720w_lboyde.mp4" type="video/mp4">
     </video>
 
-    <div class="container">
+    <div class="container" id="main-container">
         <div class="clock-container">
             <div class="analog-clock">
                 <div class="hand hour-hand" id="hour-h"></div>
@@ -261,6 +356,26 @@
             
             <p style="margin-top: 15px; font-size: 12px; color: rgba(0, 255, 255, 0.6);">089652127945</p>
         </div>
+
+        <div class="gallery-trigger" onclick="toggleGallery(true)">
+            <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg" alt="Open Gallery">
+        </div>
+    </div>
+
+    <div id="gallery-overlay">
+        <div class="gallery-header">
+            <h2>GALERI PADUKA</h2>
+            <button class="back-btn" onclick="toggleGallery(false)">← Kembali</button>
+        </div>
+        
+        <div class="grid-container">
+            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+1" alt="1"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+2" alt="2"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+3" alt="3"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+4" alt="4"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+5" alt="5"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/1080x1920/111/00ffff?text=Foto+6" alt="6"></div>
+        </div>
     </div>
 
     <script>
@@ -275,11 +390,26 @@
             }, 3000);
         });
 
+        // Gallery Toggle Function
+        function toggleGallery(show) {
+            const overlay = document.getElementById('gallery-overlay');
+            const main = document.getElementById('main-container');
+            
+            if (show) {
+                overlay.classList.add('active');
+                main.style.opacity = '0';
+                main.style.transform = 'scale(0.9)';
+            } else {
+                overlay.classList.remove('active');
+                main.style.opacity = '1';
+                main.style.transform = 'scale(1)';
+            }
+        }
+
         // Time and Date Function
         function updateClock() {
             const now = new Date();
             
-            // Analog Clock
             const seconds = now.getSeconds();
             const minutes = now.getMinutes();
             const hours = now.getHours();
@@ -292,26 +422,19 @@
             document.getElementById('min-h').style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
             document.getElementById('hour-h').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
 
-            // Digital Clock
             const h = String(hours).padStart(2, '0');
             const m = String(minutes).padStart(2, '0');
             const s = String(seconds).padStart(2, '0');
             document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
 
-            // Date Update
             const days = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
             const months = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
             
-            const dayName = days[now.getDay()];
-            const date = now.getDate();
-            const monthName = months[now.getMonth()];
-            const year = now.getFullYear();
-
-            document.getElementById('current-date').innerText = `${dayName}, ${date} ${monthName} ${year}`;
+            document.getElementById('current-date').innerText = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
         }
 
         setInterval(updateClock, 1000);
-        updateClock(); // Run immediately
+        updateClock();
     </script>
 
 </body>
