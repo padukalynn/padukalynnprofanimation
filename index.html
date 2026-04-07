@@ -24,7 +24,7 @@
             overflow: hidden;
         }
 
-        /* --- STYLING OPENING PHOTO --- */
+        /* --- STYLING OPENING FOTO --- */
         #opening {
             position: fixed;
             top: 0;
@@ -32,18 +32,17 @@
             width: 100%;
             height: 100%;
             background: #000;
-            z-index: 9999; 
+            z-index: 10000; /* Paling atas */
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 1s ease-out;
-            cursor: pointer; /* Memberi petunjuk bahwa bisa diklik */
+            transition: opacity 1s ease; /* Efek Fade Out */
         }
 
-        .opening-photo {
+        .opening-img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Agar foto memenuhi layar tanpa distorsi */
+            object-fit: cover;
         }
 
         /* Background Video Utama */
@@ -157,11 +156,15 @@
 </head>
 <body>
 
-    <div id="opening" onclick="closeOpening()">
-        <img src="https://i.postimg.cc/J0bWGWq4/Proyek-Baru-8-05D47A8.png" alt="Opening Photo" class="opening-photo">
+    <div id="opening">
+        <img src="https://i.postimg.cc/PxxJdf8V/IMG-20260407-110835.jpg" alt="Opening" class="opening-img">
     </div>
 
-    class="container">
+    <video autoplay muted loop playsinline class="video-bg">
+        <source src="https://res.cloudinary.com/drxy2exhs/video/upload/950bb6c7b0ca008ce036d52ace1349ef_720w_lboyde.mp4" type="video/mp4">
+    </video>
+
+    <div class="container">
         <div class="cover-photo"></div>
 
         <div class="profile-section">
@@ -183,19 +186,17 @@
     </div>
 
     <script>
-        const opening = document.getElementById('opening');
-
-        // Fungsi untuk menutup opening
-        function closeOpening() {
-            opening.style.opacity = '0';
+        // Logika untuk menghilangkan opening foto setelah 3 detik
+        window.addEventListener('load', () => {
+            const opening = document.getElementById('opening');
+            
             setTimeout(() => {
-                opening.style.display = 'none';
-            }, 1000);
-        }
-
-    timeout(() => {
-            closeOpening();
-        }, 3000);
+                opening.style.opacity = '0'; // Mulai efek fade out
+                setTimeout(() => {
+                    opening.style.display = 'none'; // Benar-benar hapus dari layar
+                }, 1000); // 1000ms sesuai durasi transisi CSS
+            }, 3000); // Bertahan selama 3 detik
+        });
     </script>
 
 </body>
