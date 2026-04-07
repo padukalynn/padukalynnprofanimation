@@ -56,19 +56,19 @@
             object-fit: cover;
         }
 
-        /* --- OPTIMASI DESKTOP & LANDSCAPE --- */
+        /* --- CONTAINER UTAMA --- */
         .container {
             width: 100%;
             max-width: 450px; 
             height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.6);
             position: relative;
             overflow-y: auto;
             scrollbar-width: none;
             border-left: 1px solid rgba(0, 255, 255, 0.2);
             border-right: 1px solid rgba(0, 255, 255, 0.2);
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             margin: 0 auto;
         }
 
@@ -177,7 +177,7 @@
         .game-info {
             text-align: center;
             margin-top: 20px;
-            background: rgba(0, 255, 255, 0.05);
+            background: rgba(0, 255, 255, 0.1);
             padding: 15px;
             border-radius: 15px;
             border: 1px solid #00ffff;
@@ -204,7 +204,7 @@
             color: #000;
         }
 
-        /* --- BUTTERFLY PARTICLES --- */
+        /* --- BUTTERFLY --- */
         .gallery-wrapper {
             position: fixed;
             bottom: 30px;
@@ -244,38 +244,68 @@
 
         .gallery-trigger img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- GALLERY OVERLAY --- */
+        /* --- GALERI TRANSPARAN (UPDATE) --- */
         #gallery-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.4); /* Transparan gelap */
             z-index: 2000;
             display: flex;
             flex-direction: column;
             align-items: center;
             opacity: 0;
             visibility: hidden;
-            transition: 0.5s;
-            backdrop-filter: blur(10px);
-            padding-top: 50px;
+            transition: all 0.5s ease-in-out;
+            backdrop-filter: blur(6px); /* Efek kaca transparan */
+            -webkit-backdrop-filter: blur(6px);
+            padding-top: 60px;
         }
 
-        #gallery-overlay.active { opacity: 1; visibility: visible; }
+        #gallery-overlay.active { 
+            opacity: 1; 
+            visibility: visible; 
+        }
 
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 12px;
             width: 90%;
             max-width: 400px;
+            max-height: 70vh;
             overflow-y: auto;
+            padding: 10px;
         }
 
-        .gallery-item { aspect-ratio: 9/16; border-radius: 8px; overflow: hidden; border: 1px solid #00ffff; }
+        .gallery-item { 
+            aspect-ratio: 9/16; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            border: 1.5px solid rgba(0, 255, 255, 0.5); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        .close-btn {
+            margin-top: 30px;
+            background: rgba(0, 255, 255, 0.2);
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 10px 40px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .close-btn:hover {
+            background: #00ffff;
+            color: #000;
+        }
 
         @keyframes cyanNeonGlow {
             from { box-shadow: 0 0 10px #00ffff; }
@@ -290,8 +320,7 @@
     </div>
 
     <audio id="myAudio" loop>
-        <source src="https://drive.google.com/uc?id=1L0SPdliuQCS9BQq7nrIXEoa4RL0fIHMX
-" type="audio/mp3">
+        <source src="https://drive.google.com/uc?id=1L0SPdliuQCS9BQq7nrIXEoa4RL0fIHMX" type="audio/mp3">
     </audio>
 
     <div id="opening">
@@ -338,18 +367,18 @@
     </div>
 
     <div id="gallery-overlay">
-        <h2 style="color: #00ffff; margin-bottom: 20px;">GALERI</h2>
+        <h2 style="color: #00ffff; margin-bottom: 25px; letter-spacing: 5px; text-shadow: 0 0 10px #00ffff;">GALERI</h2>
         <div class="grid-container">
             <div class="gallery-item"><img src="https://i.postimg.cc/90mdL0tw/d2f75f32837faa3c3280cabe94c80bd2.jpg"></div>
             <div class="gallery-item"><img src="https://i.postimg.cc/Jz5P5wWx/2b98f64a459a6ed9caa0be3fd83b1f5f.jpg"></div>
             <div class="gallery-item"><img src="https://i.postimg.cc/C5MFdpSd/e48eac89085fbe7210a3d448aad1c92e.jpg"></div>
             <div class="gallery-item"><img src="https://i.postimg.cc/15Cpm9PT/ada6b6052175095cb63500cd9d92922f.jpg"></div>
         </div>
-        <button onclick="toggleGallery(false)" style="margin-top: 20px; background: none; border: 1px solid #00ffff; color: #00ffff; padding: 10px 30px; border-radius: 20px;">Tutup</button>
+        <button class="close-btn" onclick="toggleGallery(false)">TUTUP</button>
     </div>
 
     <script>
-        // Music Logic
+        // Logika Musik
         const audio = document.getElementById('myAudio');
         const btn = document.getElementById('music-btn');
         function toggleMusic() {
@@ -362,7 +391,7 @@
             }
         }
 
-        // Butterfly Particles
+        // Partikel Kupu-kupu
         function createButterflies() {
             const container = document.getElementById('butterfly-container');
             for (let i = 0; i < 8; i++) {
@@ -377,7 +406,7 @@
         }
         createButterflies();
 
-        // Opening & Gallery Logic
+        // Logika Opening
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('opening').style.opacity = '0';
@@ -385,12 +414,17 @@
             }, 2500);
         });
 
+        // Logika Galeri
         function toggleGallery(show) {
             const overlay = document.getElementById('gallery-overlay');
-            overlay.classList.toggle('active', show);
+            if(show) {
+                overlay.classList.add('active');
+            } else {
+                overlay.classList.remove('active');
+            }
         }
 
-        // Clock Update
+        // Update Jam & Tanggal
         function updateClock() {
             const now = new Date();
             const s = now.getSeconds(), m = now.getMinutes(), h = now.getHours();
