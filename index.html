@@ -201,14 +201,14 @@
 
         .wa-button:hover { background: #00ffff; color: #000; }
 
-        /* --- GALERI OVERLAY (UPDATED TO HORIZONTAL SLIDER) --- */
-        #gallery-overlay {
+        /* --- OVERLAY GENERAL --- */
+        .full-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.4); 
             z-index: 2000;
             display: flex;
             flex-direction: column;
@@ -217,78 +217,86 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.4s ease-in-out;
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            overflow: hidden;
+            backdrop-filter: blur(8px);
+            padding: 10px;
         }
 
-        #gallery-overlay.active { opacity: 1; visibility: visible; }
+        .full-overlay.active { opacity: 1; visibility: visible; }
 
+        /* --- IFRAME BOX (CHESS.COM) --- */
+        .iframe-container {
+            width: 95%;
+            max-width: 450px;
+            height: 70vh;
+            border: 2px solid #ff00ff;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* --- GALERI SLIDER --- */
         .grid-container {
-            display: flex; /* Menggunakan Flex untuk geser kanan */
+            display: flex;
             gap: 15px;
             width: 100%;
             max-width: 420px;
-            overflow-x: auto; /* Aktifkan geser horizontal */
-            scroll-snap-type: x mandatory; /* Efek magnet saat digeser */
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
             padding: 20px 10px;
             scrollbar-width: thin;
             scrollbar-color: #00ffff transparent;
             z-index: 2002;
-            position: relative;
         }
 
         .grid-container::-webkit-scrollbar { height: 4px; }
         .grid-container::-webkit-scrollbar-thumb { background: #00ffff; border-radius: 10px; }
 
         .gallery-item { 
-            flex: 0 0 calc(50% - 10px); /* 2 Foto per baris terlihat */
+            flex: 0 0 calc(50% - 10px);
             scroll-snap-align: start;
             border-radius: 12px; 
             overflow: hidden; 
             border: 1.5px solid #00ffff; 
             background: rgba(0, 0, 0, 0.7);
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
             display: flex;
             flex-direction: column;
         }
 
-        .gallery-item img { 
-            width: 100%; 
-            aspect-ratio: 9 / 16; 
-            object-fit: cover;
-            display: block;
-        }
-
-        .photo-caption {
-            padding: 8px 5px;
-            font-size: 10px;
-            text-align: center;
-            color: #00ffff;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 0 0 5px #00ffff;
-            border-top: 1px solid rgba(0, 255, 255, 0.2);
-            background: rgba(0,0,0,0.5);
-        }
+        .gallery-item img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; }
 
         .close-btn {
-            margin-top: 20px;
+            margin-top: 15px;
             background: rgba(0, 0, 0, 0.8);
             border: 2px solid #00ffff;
             color: #00ffff;
-            padding: 12px 60px;
+            padding: 10px 40px;
             border-radius: 30px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-            z-index: 2002;
         }
 
-        /* --- BUTTERFLY TRIGGER --- */
-        .gallery-wrapper { position: fixed; bottom: 30px; left: 30px; z-index: 999; }
-        .gallery-trigger { 
+        .close-chess { border-color: #ff00ff; color: #ff00ff; }
+
+        /* --- BUTTON TRIGGER GROUP --- */
+        .gallery-wrapper { 
+            position: fixed; 
+            bottom: 30px; 
+            left: 30px; 
+            z-index: 999; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+        }
+
+        .gallery-trigger,
+        .chess-trigger { 
             width: 65px; 
             height: 65px; 
             border: 2px solid #00ffff; 
@@ -296,19 +304,27 @@
             overflow: hidden; 
             cursor: pointer; 
             background: #000; 
-            position: relative; 
-            z-index: 10;
             box-shadow: 0 0 15px #00ffff;
-        }
-        .gallery-trigger img { width: 100%; height: 100%; object-fit: cover; }
-
-        .float-particle {
-            position: absolute;
-            pointer-events: none;
-            z-index: 2001;
-            animation: float-up 5s linear forwards;
+            transition: 0.3s;
         }
 
+        .gallery-trigger img,
+        .chess-trigger img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            aspect-ratio: 1/1; 
+        }
+
+        .chess-trigger {
+            border-color: #ff00ff; 
+            box-shadow: 0 0 15px #ff00ff;
+            animation: pinkNeonGlow 2s infinite alternate;
+        }
+
+        .chess-trigger:hover, .gallery-trigger:hover { transform: scale(1.1); }
+
+        /* --- ANIMASI --- */
         @keyframes float-up {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
             10% { opacity: 1; }
@@ -316,6 +332,9 @@
         }
 
         @keyframes cyanNeonGlow { from { box-shadow: 0 0 10px #00ffff; } to { box-shadow: 0 0 25px #00ffff, 0 0 5px #fff; } }
+        @keyframes pinkNeonGlow { from { box-shadow: 0 0 10px #ff00ff; } to { box-shadow: 0 0 25px #ff00ff, 0 0 5px #fff; } }
+
+        .float-particle { position: absolute; pointer-events: none; z-index: 2001; animation: float-up 5s linear forwards; }
     </style>
 </head>
 <body>
@@ -363,12 +382,22 @@
     </div>
 
     <div class="gallery-wrapper">
+        <div class="chess-trigger" onclick="toggleChess(true)">
+            <img src="URL_FOTO_1X1_DI_SINI" alt="Chess.com">
+        </div>
         <div class="gallery-trigger" onclick="toggleGallery(true)">
             <img src="https://i.ibb.co.com/BKSNCDXy/fa41f3eebe2ebd07963f723612ede0dc.jpg" alt="Gallery">
         </div>
     </div>
 
-    <div id="gallery-overlay">
+    <div id="chess-overlay" class="full-overlay">
+        <div class="iframe-container">
+            <iframe src="https://www.chess.com"></iframe>
+        </div>
+        <button class="close-btn close-chess" onclick="toggleChess(false)">TUTUP CHESS</button>
+    </div>
+
+    <div id="gallery-overlay" class="full-overlay">
         <div id="particle-box"></div>
         <h2 style="color: #00ffff; margin-bottom: 5px; letter-spacing: 3px; text-shadow: 0 0 10px #00ffff;">— GALERI PADUKA —</h2>
         <p style="color: #00ffff; font-size: 9px; margin-bottom: 15px; opacity: 0.8;">GESER KE KANAN ➔</p>
@@ -378,7 +407,6 @@
             <div class="gallery-item"><img src="https://i.ibb.co.com/tpkFq3vg/eae7b1265d89ac646b273089677f5aa5.jpg"><div class="photo-caption">Pengering</div></div>
             <div class="gallery-item"><img src="https://i.ibb.co.com/3DRZHcS/16b7afe11c5ad86b1cfe2fd24c215f04.jpg"><div class="photo-caption">Guling Admin</div></div>
             <div class="gallery-item"><img src="https://i.ibb.co.com/1Jbx6WLK/b906d089dfa22a686cd9a9e5621d4978.jpg"><div class="photo-caption">Asisten Admin</div></div>
-
             <div class="gallery-item"><img src="https://i.ibb.co.com/k6v7K368/133550e1b0b933a202d4aa004de97d3c.jpg"><div class="photo-caption">Selimut admin</div></div>
             <div class="gallery-item"><img src="https://i.ibb.co.com/jPMrbLYP/d2f75f32837faa3c3280cabe94c80bd2.jpg"><div class="photo-caption">Yang Nyuapin Admin</div></div>
             <div class="gallery-item"><img src="https://i.ibb.co.com/5xJJgC1X/394ba47050b1abf06a6e99ac59a5c2b6.jpg"><div class="photo-caption">Cheff Admin</div></div>
@@ -404,6 +432,14 @@
             }, 2500);
         });
 
+        // FUNGSI CHESS
+        function toggleChess(show) {
+            const overlay = document.getElementById('chess-overlay');
+            if(show) overlay.classList.add('active');
+            else overlay.classList.remove('active');
+        }
+
+        // FUNGSI GALERI
         function toggleGallery(show) {
             const overlay = document.getElementById('gallery-overlay');
             if(show) {
