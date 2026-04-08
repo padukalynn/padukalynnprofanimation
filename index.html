@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>— 𝑷‌𝒂‌𝒅‌𝒖‌𝒌‌á𝑳‌𝒚‌𝒏‌ñ🥇🆙 Profile</title>
+    
+    <link rel="icon" href="https://i.ibb.co.com/pBNdG7L3/IMG-20260407-110835.jpg" type="image/x-icon">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
 
@@ -93,16 +96,13 @@
             transition: 0.3s;
         }
 
-        .music-control.playing {
-            animation: rotate 3s linear infinite;
-        }
+        .music-control svg { width: 24px; height: 24px; fill: #00ffff; }
+        .music-control.playing { animation: rotate 3s linear infinite; border-color: #ff00ff; box-shadow: 0 0 15px #ff00ff; }
+        .music-control.playing svg { fill: #ff00ff; }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- CLOCK STYLING --- */
+        /* --- CLOCK --- */
         .clock-container {
             position: sticky;
             top: 15px;
@@ -199,129 +199,93 @@
             transition: 0.3s;
         }
 
-        .wa-button:hover {
-            background: #00ffff;
-            color: #000;
-        }
+        .wa-button:hover { background: #00ffff; color: #000; }
 
-        /* --- BUTTERFLY --- */
-        .gallery-wrapper {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            z-index: 999;
-        }
-
-        .butterfly {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #00ffff;
-            border-radius: 50%;
-            filter: blur(2px);
-            pointer-events: none;
-            opacity: 0;
-            animation: fly 4s infinite ease-in-out;
-        }
-
-        @keyframes fly {
-            0% { transform: translate(0, 0) scale(1); opacity: 0; }
-            20% { opacity: 1; }
-            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
-        }
-
-        .gallery-trigger {
-            width: 65px;
-            height: 65px;
-            border: 2px solid #00ffff;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            background: #000;
-            position: relative;
-            z-index: 10;
-        }
-
-        .gallery-trigger img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* --- GALERI TRANSPARAN (UPDATE) --- */
+        /* --- GALERI POPUP (ANTI BERTABRAKAN) --- */
         #gallery-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* Transparan gelap */
+            background: rgba(0, 0, 0, 0.95);
             z-index: 2000;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.5s ease-in-out;
-            backdrop-filter: blur(6px); /* Efek kaca transparan */
-            -webkit-backdrop-filter: blur(6px);
-            padding-top: 60px;
+            transition: all 0.4s ease-in-out;
+            backdrop-filter: blur(15px);
+            padding: 20px;
         }
 
-        #gallery-overlay.active { 
-            opacity: 1; 
-            visibility: visible; 
-        }
+        #gallery-overlay.active { opacity: 1; visibility: visible; }
 
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            width: 90%;
+            gap: 15px;
+            width: 100%;
             max-width: 400px;
-            max-height: 70vh;
-            overflow-y: auto;
-            padding: 10px;
+            max-height: 65vh; 
+            overflow-y: scroll; /* Paksa muncul scroll jika penuh */
+            padding: 15px;
+            scrollbar-width: thin;
+            scrollbar-color: #00ffff transparent;
         }
+
+        .grid-container::-webkit-scrollbar { width: 4px; }
+        .grid-container::-webkit-scrollbar-thumb { background: #00ffff; border-radius: 10px; }
 
         .gallery-item { 
-            aspect-ratio: 9/16; 
+            width: 100%;
+            aspect-ratio: 9 / 16; /* Kotak tetap ada meskipun gambar eror */
             border-radius: 12px; 
             overflow: hidden; 
-            border: 1.5px solid rgba(0, 255, 255, 0.5); 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1.5px solid rgba(0, 255, 255, 0.3); 
+            background: #111; /* Latar gelap jika gambar gagal muat */
+            position: relative;
         }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        .gallery-item img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            display: block;
+        }
 
         .close-btn {
-            margin-top: 30px;
-            background: rgba(0, 255, 255, 0.2);
+            margin-top: 20px;
+            background: #000;
             border: 2px solid #00ffff;
             color: #00ffff;
-            padding: 10px 40px;
+            padding: 12px 60px;
             border-radius: 30px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
-            backdrop-filter: blur(5px);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            flex-shrink: 0;
         }
 
-        .close-btn:hover {
-            background: #00ffff;
-            color: #000;
-        }
+        .close-btn:hover { background: #00ffff; color: #000; }
 
-        @keyframes cyanNeonGlow {
-            from { box-shadow: 0 0 10px #00ffff; }
-            to { box-shadow: 0 0 25px #00ffff, 0 0 5px #fff; }
-        }
+        /* --- BUTTERFLY & TRIGGER --- */
+        .gallery-wrapper { position: fixed; bottom: 30px; left: 30px; z-index: 999; }
+        .gallery-trigger { width: 65px; height: 65px; border: 2px solid #00ffff; border-radius: 12px; overflow: hidden; cursor: pointer; background: #000; position: relative; z-index: 10; }
+        .gallery-trigger img { width: 100%; height: 100%; object-fit: cover; }
+
+        @keyframes cyanNeonGlow { from { box-shadow: 0 0 10px #00ffff; } to { box-shadow: 0 0 25px #00ffff, 0 0 5px #fff; } }
     </style>
 </head>
 <body>
 
     <div class="music-control" id="music-btn" onclick="toggleMusic()">
-        <span id="music-icon">🎵</span>
+        <svg id="music-svg" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
     </div>
 
-    <audio id="myAudio" loop>
-        <source src="https://f.top4top.io/m_3749hnxln0.mp3" type="audio/mp3">
-    </audio>
+    <audio id="myAudio" loop><source src="https://f.top4top.io/m_3749hnxln0.mp3" type="audio/mp3"></audio>
 
     <div id="opening">
         <img src="https://i.ibb.co.com/tM30yx1J/Proyek-Baru-8-05-D47-A8.png" alt="Opening" class="opening-img">
@@ -360,53 +324,38 @@
     </div>
 
     <div class="gallery-wrapper">
-        <div id="butterfly-container"></div>
-        <div class="gallery-trigger" id="gallery-btn" onclick="toggleGallery(true)">
+        <div class="gallery-trigger" onclick="toggleGallery(true)">
             <img src="https://i.ibb.co.com/twLMn3zT/IMG-20260407-214744.jpg" alt="Gallery">
         </div>
     </div>
 
     <div id="gallery-overlay">
-        <h2 style="color: #00ffff; margin-bottom: 25px; letter-spacing: 5px; text-shadow: 0 0 10px #00ffff;">—GALERI PADUKA</h2>
+        <h2 style="color: #00ffff; margin-bottom: 20px; letter-spacing: 3px; text-shadow: 0 0 10px #00ffff;">— GALERI —</h2>
         <div class="grid-container">
             <div class="gallery-item"><img src="https://i.ibb.co.com/0RCLSMTK/51e52f6ac2567e5a4c475c0b277328a8.jpg"></div>
             <div class="gallery-item"><img src="https://i.ibb.co.com/tpkFq3vg/eae7b1265d89ac646b273089677f5aa5.jpg"></div>
             <div class="gallery-item"><img src="https://i.ibb.co.com/3DRZHcS/16b7afe11c5ad86b1cfe2fd24c215f04.jpg"></div>
             <div class="gallery-item"><img src="https://i.ibb.co.com/1Jbx6WLK/b906d089dfa22a686cd9a9e5621d4978.jpg"></div>
+            
+            <div class="gallery-item"><img src="https://img.freepik.com/premium-photo/anime-girl-neon-city_1150454-34.jpg"></div>
+            <div class="gallery-item"><img src="https://img.freepik.com/premium-photo/anime-girl-street_1150454-35.jpg"></div>
+            <div class="gallery-item"><img src="https://img.freepik.com/premium-photo/anime-girl-walking_1150454-36.jpg"></div>
+            <div class="gallery-item"><img src="https://img.freepik.com/premium-photo/anime-girl-standing_1150454-37.jpg"></div>
+            <div class="gallery-item"><img src="https://img.freepik.com/premium-photo/anime-girl-portrait_1150454-38.jpg"></div>
+            <div class="gallery-item"><img src="https://img.freepik.com/premium-photo/anime-girl-back_1150454-39.jpg"></div>
         </div>
         <button class="close-btn" onclick="toggleGallery(false)">TUTUP</button>
     </div>
 
     <script>
-        // Logika Musik
         const audio = document.getElementById('myAudio');
         const btn = document.getElementById('music-btn');
+
         function toggleMusic() {
-            if (audio.paused) {
-                audio.play();
-                btn.classList.add('playing');
-            } else {
-                audio.pause();
-                btn.classList.remove('playing');
-            }
+            if (audio.paused) { audio.play(); btn.classList.add('playing'); } 
+            else { audio.pause(); btn.classList.remove('playing'); }
         }
 
-        // Partikel Kupu-kupu
-        function createButterflies() {
-            const container = document.getElementById('butterfly-container');
-            for (let i = 0; i < 8; i++) {
-                const b = document.createElement('div');
-                b.className = 'butterfly';
-                b.style.setProperty('--x', (Math.random() * 100 - 50) + 'px');
-                b.style.setProperty('--y', (Math.random() * -100 - 20) + 'px');
-                b.style.left = Math.random() * 50 + 'px';
-                b.style.animationDelay = Math.random() * 4 + 's';
-                container.appendChild(b);
-            }
-        }
-        createButterflies();
-
-        // Logika Opening
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('opening').style.opacity = '0';
@@ -414,17 +363,12 @@
             }, 2500);
         });
 
-        // Logika Galeri
         function toggleGallery(show) {
             const overlay = document.getElementById('gallery-overlay');
-            if(show) {
-                overlay.classList.add('active');
-            } else {
-                overlay.classList.remove('active');
-            }
+            if(show) overlay.classList.add('active');
+            else overlay.classList.remove('active');
         }
 
-        // Update Jam & Tanggal
         function updateClock() {
             const now = new Date();
             const s = now.getSeconds(), m = now.getMinutes(), h = now.getHours();
