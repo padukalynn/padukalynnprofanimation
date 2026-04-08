@@ -64,14 +64,14 @@
             width: 100%;
             max-width: 450px; 
             height: 100vh;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.4);
             position: relative;
             overflow-y: auto;
             scrollbar-width: none;
             border-left: 1px solid rgba(0, 255, 255, 0.2);
             border-right: 1px solid rgba(0, 255, 255, 0.2);
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             margin: 0 auto;
         }
 
@@ -201,14 +201,14 @@
 
         .wa-button:hover { background: #00ffff; color: #000; }
 
-        /* --- GALERI POPUP (ANTI BERTABRAKAN) --- */
+        /* --- GALERI OVERLAY (UPDATED TO HORIZONTAL SLIDER) --- */
         #gallery-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 2000;
             display: flex;
             flex-direction: column;
@@ -217,64 +217,103 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.4s ease-in-out;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             padding: 20px;
+            overflow: hidden;
         }
 
         #gallery-overlay.active { opacity: 1; visibility: visible; }
 
         .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            display: flex; /* Menggunakan Flex untuk geser kanan */
             gap: 15px;
             width: 100%;
-            max-width: 400px;
-            max-height: 65vh; 
-            overflow-y: scroll; /* Paksa muncul scroll jika penuh */
-            padding: 15px;
+            max-width: 420px;
+            overflow-x: auto; /* Aktifkan geser horizontal */
+            scroll-snap-type: x mandatory; /* Efek magnet saat digeser */
+            padding: 20px 10px;
             scrollbar-width: thin;
             scrollbar-color: #00ffff transparent;
+            z-index: 2002;
+            position: relative;
         }
 
-        .grid-container::-webkit-scrollbar { width: 4px; }
+        .grid-container::-webkit-scrollbar { height: 4px; }
         .grid-container::-webkit-scrollbar-thumb { background: #00ffff; border-radius: 10px; }
 
         .gallery-item { 
-            width: 100%;
-            aspect-ratio: 9 / 16; /* Kotak tetap ada meskipun gambar eror */
+            flex: 0 0 calc(50% - 10px); /* 2 Foto per baris terlihat */
+            scroll-snap-align: start;
             border-radius: 12px; 
             overflow: hidden; 
-            border: 1.5px solid rgba(0, 255, 255, 0.3); 
-            background: #111; /* Latar gelap jika gambar gagal muat */
-            position: relative;
+            border: 1.5px solid #00ffff; 
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
         }
 
         .gallery-item img { 
             width: 100%; 
-            height: 100%; 
+            aspect-ratio: 9 / 16; 
             object-fit: cover;
             display: block;
         }
 
+        .photo-caption {
+            padding: 8px 5px;
+            font-size: 10px;
+            text-align: center;
+            color: #00ffff;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px #00ffff;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            background: rgba(0,0,0,0.5);
+        }
+
         .close-btn {
             margin-top: 20px;
-            background: #000;
+            background: rgba(0, 0, 0, 0.8);
             border: 2px solid #00ffff;
             color: #00ffff;
             padding: 12px 60px;
             border-radius: 30px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            z-index: 2002;
         }
 
-        .close-btn:hover { background: #00ffff; color: #000; }
-
-        /* --- BUTTERFLY & TRIGGER --- */
+        /* --- BUTTERFLY TRIGGER --- */
         .gallery-wrapper { position: fixed; bottom: 30px; left: 30px; z-index: 999; }
-        .gallery-trigger { width: 65px; height: 65px; border: 2px solid #00ffff; border-radius: 12px; overflow: hidden; cursor: pointer; background: #000; position: relative; z-index: 10; }
+        .gallery-trigger { 
+            width: 65px; 
+            height: 65px; 
+            border: 2px solid #00ffff; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            cursor: pointer; 
+            background: #000; 
+            position: relative; 
+            z-index: 10;
+            box-shadow: 0 0 15px #00ffff;
+        }
         .gallery-trigger img { width: 100%; height: 100%; object-fit: cover; }
+
+        .float-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 2001;
+            animation: float-up 5s linear forwards;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
 
         @keyframes cyanNeonGlow { from { box-shadow: 0 0 10px #00ffff; } to { box-shadow: 0 0 25px #00ffff, 0 0 5px #fff; } }
     </style>
@@ -309,17 +348,17 @@
 
         <div class="profile-section">
             <img src="https://i.ibb.co.com/pBNdG7L3/IMG-20260407-110835.jpg" alt="Profile" class="profile-img">
-            <div id="current-date" style="font-size: 10px; letter-spacing: 2px;">SABTU, 01 JANUARI 2024</div>
+            <div id="current-date" style="font-size: 10px; letter-spacing: 2px; color: #00ffff; text-shadow: 0 0 5px #00ffff;">SABTU, 01 JANUARI 2024</div>
             <h1 class="name">— 𝑷‌𝒂‌𝒅‌𝒖‌𝒌‌á𝑳‌𝒚‌𝒏‌ñ🥇🆙</h1>
-            <p style="font-size: 12px; opacity: 0.7; margin: 5px 0;">🇯🇵 Suginami, Tokyo, Japan</p>
+            <p style="font-size: 12px; opacity: 0.9; margin: 5px 0; color: #00ffff;">🇯🇵 Suginami, Tokyo, Japan</p>
 
             <div class="game-info">
-                <p><strong>Game Name:</strong> RománticLynñ</p>
-                <p><strong>Game ID:</strong> 3246866473</p>
+                <p><strong style="color: #00ffff;">Game Name:</strong> RománticLynñ</p>
+                <p><strong style="color: #00ffff;">Game ID:</strong> 3246866473</p>
             </div>
 
             <a href="https://wa.me/6289652127945" class="wa-button" target="_blank">Chat via WhatsApp</a>
-            <p style="margin-top: 30px; font-size: 9px; color: rgba(255, 255, 255, 0.3);">© 2026 PadukaLynñ.</p>
+            <p style="margin-top: 30px; font-size: 9px; color: #00ffff; opacity: 0.5;">© 2026 PadukaLynñ.</p>
         </div>
     </div>
 
@@ -330,19 +369,20 @@
     </div>
 
     <div id="gallery-overlay">
-        <h2 style="color: #00ffff; margin-bottom: 20px; letter-spacing: 3px; text-shadow: 0 0 10px #00ffff;">— GALERI —</h2>
+        <div id="particle-box"></div>
+        <h2 style="color: #00ffff; margin-bottom: 5px; letter-spacing: 3px; text-shadow: 0 0 10px #00ffff;">— GALERI PADUKA —</h2>
+        <p style="color: #00ffff; font-size: 9px; margin-bottom: 15px; opacity: 0.8;">GESER KE KANAN ➔</p>
+        
         <div class="grid-container">
-            <div class="gallery-item"><img src="https://i.ibb.co.com/0RCLSMTK/51e52f6ac2567e5a4c475c0b277328a8.jpg"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co.com/tpkFq3vg/eae7b1265d89ac646b273089677f5aa5.jpg"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co.com/3DRZHcS/16b7afe11c5ad86b1cfe2fd24c215f04.jpg"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co.com/1Jbx6WLK/b906d089dfa22a686cd9a9e5621d4978.jpg"></div>
-            
-            <div class="gallery-item"><img src="https://i.ibb.co.com/k6v7K368/133550e1b0b933a202d4aa004de97d3c.jpg"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co.com/jPMrbLYP/d2f75f32837faa3c3280cabe94c80bd2.jpg"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co.com/5xJJgC1X/394ba47050b1abf06a6e99ac59a5c2b6.jpg"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co.com/p60cPvx4/79182b494363af453f20b27c3acde14b.jpg"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co.com/ds6nnrVz/5077fca584a4665692a23d7683ad191c.jpg"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co.com/Lhg0wCpb/683ae4d8543483f077af5c8c44b6677f.jpg"></div>
+            <div class="gallery-item"><img src="https://i.ibb.co.com/0RCLSMTK/51e52f6ac2567e5a4c475c0b277328a8.jpg"><div class="photo-caption">Manipulator Muani</div></div>
+            <div class="gallery-item"><img src="https://i.ibb.co.com/tpkFq3vg/eae7b1265d89ac646b273089677f5aa5.jpg"><div class="photo-caption">Pengering</div></div>
+            <div class="gallery-item"><img src="https://i.ibb.co.com/3DRZHcS/16b7afe11c5ad86b1cfe2fd24c215f04.jpg"><div class="photo-caption">Guling Admin</div></div>
+            <div class="gallery-item"><img src="https://i.ibb.co.com/1Jbx6WLK/b906d089dfa22a686cd9a9e5621d4978.jpg"><div class="photo-caption">Asisten Admin</div></div>
+
+            <div class="gallery-item"><img src="https://i.ibb.co.com/k6v7K368/133550e1b0b933a202d4aa004de97d3c.jpg"><div class="photo-caption">Selimut admin</div></div>
+            <div class="gallery-item"><img src="https://i.ibb.co.com/jPMrbLYP/d2f75f32837faa3c3280cabe94c80bd2.jpg"><div class="photo-caption">Yang Nyuapin Admin</div></div>
+            <div class="gallery-item"><img src="https://i.ibb.co.com/5xJJgC1X/394ba47050b1abf06a6e99ac59a5c2b6.jpg"><div class="photo-caption">Cheff Admin</div></div>
+            <div class="gallery-item"><img src="https://i.ibb.co.com/Lhg0wCpb/683ae4d8543483f077af5c8c44b6677f.jpg"><div class="photo-caption">Bantal Admin</div></div>
         </div>
         <button class="close-btn" onclick="toggleGallery(false)">TUTUP</button>
     </div>
@@ -350,6 +390,7 @@
     <script>
         const audio = document.getElementById('myAudio');
         const btn = document.getElementById('music-btn');
+        let particleInterval;
 
         function toggleMusic() {
             if (audio.paused) { audio.play(); btn.classList.add('playing'); } 
@@ -365,8 +406,28 @@
 
         function toggleGallery(show) {
             const overlay = document.getElementById('gallery-overlay');
-            if(show) overlay.classList.add('active');
-            else overlay.classList.remove('active');
+            if(show) {
+                overlay.classList.add('active');
+                createParticles();
+            } else {
+                overlay.classList.remove('active');
+                clearInterval(particleInterval);
+            }
+        }
+
+        function createParticles() {
+            const box = document.getElementById('particle-box');
+            clearInterval(particleInterval);
+            particleInterval = setInterval(() => {
+                const p = document.createElement('div');
+                p.className = 'float-particle';
+                p.innerHTML = Math.random() > 0.5 ? '🦋' : '💗';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                p.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                box.appendChild(p);
+                setTimeout(() => p.remove(), 6000);
+            }, 400);
         }
 
         function updateClock() {
